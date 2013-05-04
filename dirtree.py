@@ -3,8 +3,9 @@ import os
 
 def dir_string(dirname, files):
     depth = dirname.count(os.sep)
-    fs = [fname for fname in files if os.path.isfile(os.path.join(dirname, fname))]
-    ds = [os.path.join(dirname, dname) for dname in files if os.path.isdir(os.path.join(dirname, dname))]
+    files = [file for file in files if file[0] != '.']
+    fs = sorted([fname for fname in files if os.path.isfile(os.path.join(dirname, fname))])
+    ds = sorted([os.path.join(dirname, dname) for dname in files if os.path.isdir(os.path.join(dirname, dname))])
     return os.path.basename(dirname) + os.linesep + \
         (os.linesep).join(['\t' + filename for filename in fs]) + \
         (os.linesep + '\t').join([dir_string(d, os.listdir(d)).replace(os.linesep, os.linesep + '\t') for 
